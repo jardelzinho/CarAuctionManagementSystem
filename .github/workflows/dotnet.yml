@@ -24,4 +24,6 @@ jobs:
       run: dotnet build ./CarAuctionManagementSystem.sln --configuration Release --no-restore
       
     - name: RunUnitTests
-      run: dotnet test --no-build --verbosity d
+      run: |
+        cd CarAuctionManagementSystem.Tests
+        dotnet test --no-restore --verbosity normal
