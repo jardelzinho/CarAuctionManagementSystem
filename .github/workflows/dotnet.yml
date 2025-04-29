@@ -9,18 +9,19 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+    
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build ./CarAuctionManagementSystem.Application/CarAuctionManagementSystem.Application.csproj --configuration Release --no-restore
+      
+    - name: RunUnitTests
+      run: dotnet test ./CarAuctionManagementSystem.Tests/CarAuctionManagementSystem.Tests.csproj --no-build --verbosity normal
