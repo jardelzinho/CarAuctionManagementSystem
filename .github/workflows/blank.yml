@@ -4,8 +4,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -25,24 +23,5 @@ jobs:
     - name: Build
       run: dotnet build ./CarAuctionManagementSystem.Application/CarAuctionManagementSystem.Application.csproj --configuration Release --no-restore
       
-    - name: Publish
-      run: dotnet publish ./CarAuctionManagementSystem.Application/CarAuctionManagementSystem.Application.csproj --configuration Release --no-build --output ./publish
-
-    - name: run-tests
-      uses: alsi-lawr/dotnet-test-coverlet@v1
-      with:
-        project: ./CarAuctionManagementSystem.Tests/CarAuctionManagementSystem.Tests.csproj
-        collect: XPlat Code Coverage
-        coverlet_args: '--format cobertura --format html'
-        
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-report
-        path: coverage.cobertura.xml
-
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.3.3
-      with:
-        name: car-auction-management-system
-        path: ./publish
+    - name: RunUnitTests
+      run: dotnet test ./CarAuctionManagementSystem.Tests/CarAuctionManagementSystem.Tests.csproj --no-build --verbosity normal
